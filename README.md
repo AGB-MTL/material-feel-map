@@ -27,13 +27,13 @@ The map is deliberately made of independent dimensions rather than fixed categor
 This repository is split on purpose:
 
 - **Source code** (the interactive map: HTML, CSS, JavaScript) is licensed **MIT**. See `LICENSE`.
-- **Everything else** (the essay, the taxonomy, the JSON and CSV data, and the physical-grounding reference) is licensed **CC BY 4.0**. Use and adapt it for any purpose, including commercially, with attribution. See `LICENSE-CC-BY.md`.
+- **Everything else** (the essay, the taxonomy, the JSON, and the physical-grounding reference) is licensed **CC BY 4.0**. Use and adapt it for any purpose, including commercially, with attribution. See `LICENSE-CC-BY.md`.
 
 ## Citing this work
 
-The canonical, citable version lives on OSF with a DOI: **[add your OSF DOI here]**
+The canonical, citable version lives on OSF with a DOI: **https://doi.org/10.17605/OSF.IO/FZ2AR**
 
-Suggested attribution: *"Material Feel Map" by [your name], licensed CC BY 4.0.*
+Suggested attribution: *"Material Feel Map" by Anuja Bagul, licensed CC BY 4.0.*
 
 ## About SENSUS
 
