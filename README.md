@@ -3,7 +3,7 @@
 An open, shared vocabulary for how materials feel.
 
 **Try the interactive map:** https://agb-mtl.github.io/material-feel-map/material_feel_map.html
-*(this link goes live once GitHub Pages is turned on; confirm the exact address in Settings → Pages)*
+
 
 ## What this is
 
