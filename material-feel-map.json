@@ -1,0 +1,226 @@
+{
+  "name": "Material Feel Map",
+  "version": "1.0",
+  "license": "CC BY 4.0 (data); MIT (code)",
+  "thesis": "sensation becomes feeling becomes meaning, through combination",
+  "dimensions": [
+    {
+      "id": "texture",
+      "name": "Texture",
+      "poles": [
+        "rough",
+        "smooth"
+      ]
+    },
+    {
+      "id": "give",
+      "name": "Give",
+      "poles": [
+        "hard",
+        "soft"
+      ]
+    },
+    {
+      "id": "temp",
+      "name": "Temperature",
+      "poles": [
+        "cool",
+        "warm"
+      ]
+    },
+    {
+      "id": "moisture",
+      "name": "Moisture",
+      "poles": [
+        "dry",
+        "moist"
+      ]
+    },
+    {
+      "id": "grip",
+      "name": "Grip",
+      "poles": [
+        "slippery",
+        "grippy"
+      ]
+    },
+    {
+      "id": "weight",
+      "name": "Weight",
+      "poles": [
+        "light",
+        "substantial"
+      ]
+    }
+  ],
+  "note": "Each reading is a hypothesis mapping a combination of independent sensory poles to feeling and meaning. Dimensions are treated as independent; 'contested' readings carry more than one plausible meaning.",
+  "readings": [
+    {
+      "id": 1,
+      "recipe": {
+        "give": "soft",
+        "temp": "warm"
+      },
+      "feeling": [
+        "comforting",
+        "soothing",
+        "reassuring"
+      ],
+      "meaning": [
+        "nurturing",
+        "homely",
+        "gentle"
+      ],
+      "contested": false,
+      "reading": "Soft and warm together read as care."
+    },
+    {
+      "id": 2,
+      "recipe": {
+        "give": "soft",
+        "temp": "cool"
+      },
+      "feeling": [
+        "calm",
+        "soothing"
+      ],
+      "meaning": [
+        "refined",
+        "composed",
+        "clean"
+      ],
+      "contested": false,
+      "reading": "Soft but cool reads as calm and refined, without the coziness."
+    },
+    {
+      "id": 3,
+      "recipe": {
+        "texture": "smooth",
+        "temp": "cool",
+        "give": "hard"
+      },
+      "feeling": [
+        "calm",
+        "controlled"
+      ],
+      "meaning": [
+        "precise",
+        "modern",
+        "clinical"
+      ],
+      "contested": false,
+      "reading": "Smooth, cool and hard read as clean, modern, engineered."
+    },
+    {
+      "id": 4,
+      "recipe": {
+        "texture": "rough",
+        "moisture": "dry"
+      },
+      "feeling": [
+        "alerting",
+        "bracing"
+      ],
+      "meaning": [
+        "natural",
+        "rugged",
+        "or unrefined"
+      ],
+      "contested": true,
+      "reading": "Rough and dry read as natural and rugged, or as unfinished. Context decides."
+    },
+    {
+      "id": 5,
+      "recipe": {
+        "grip": "grippy",
+        "weight": "substantial"
+      },
+      "feeling": [
+        "secure",
+        "steady",
+        "reassuring"
+      ],
+      "meaning": [
+        "durable",
+        "dependable",
+        "sturdy"
+      ],
+      "contested": false,
+      "reading": "Grippy and substantial read as durable and dependable."
+    },
+    {
+      "id": 6,
+      "recipe": {
+        "texture": "smooth",
+        "grip": "slippery"
+      },
+      "feeling": [
+        "sleek",
+        "frictionless"
+      ],
+      "meaning": [
+        "efficient",
+        "engineered",
+        "or slick, evasive"
+      ],
+      "contested": true,
+      "reading": "Smooth and slippery read as sleek and efficient, or as slick and evasive."
+    },
+    {
+      "id": 7,
+      "recipe": {
+        "grip": "grippy",
+        "moisture": "moist"
+      },
+      "feeling": [
+        "clinging",
+        "secure"
+      ],
+      "meaning": [
+        "protective",
+        "high-performance",
+        "or cheap, synthetic"
+      ],
+      "contested": true,
+      "reading": "Grippy and moist read as protective, high-performance grip, or as cheap and synthetic."
+    },
+    {
+      "id": 8,
+      "recipe": {
+        "texture": "smooth",
+        "give": "soft",
+        "weight": "light"
+      },
+      "feeling": [
+        "delicate",
+        "light"
+      ],
+      "meaning": [
+        "fine",
+        "precious",
+        "luxurious"
+      ],
+      "contested": false,
+      "reading": "Smooth, soft and light read as delicate and precious."
+    },
+    {
+      "id": 9,
+      "recipe": {
+        "give": "hard",
+        "temp": "cool",
+        "weight": "substantial"
+      },
+      "feeling": [
+        "solid",
+        "serious"
+      ],
+      "meaning": [
+        "premium",
+        "authoritative",
+        "engineered"
+      ],
+      "contested": false,
+      "reading": "Hard, cool and substantial read as premium and serious."
+    }
+  ]
+}

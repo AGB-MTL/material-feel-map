@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Material Feel Map · SENSUS</title>
+<meta name="description" content="A shared, open vocabulary for how materials feel: six independent sensory dimensions that combine into feeling and meaning. Part of SENSUS.">
+<meta name="author" content="SENSUS">
+<meta property="og:title" content="The Material Feel Map">
+<meta property="og:description" content="A shared vocabulary for how materials feel: independent sensory dimensions that combine into feeling and meaning.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='13' fill='%235F8AA6'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ground:#F3F0E9; --paper:#FBFAF6; --ink:#23201B; --muted:#6B6559;
+    --faint:#A8A192; --line:#DCD7CB; --sel:#5F8AA6; --sel-bg:#E7EEF2;
+    --amber:#7A5A1E; --amber-bg:#F6ECD9;
+    --serif:'Instrument Serif',Georgia,serif;
+    --sans:'IBM Plex Sans',system-ui,sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{background:var(--ground);color:var(--ink);font-family:var(--sans);
+    line-height:1.6;padding:clamp(20px,5vw,56px);display:flex;justify-content:center}
+  .wrap{width:100%;max-width:1080px}
+
+  header{margin-bottom:clamp(24px,4vw,40px);max-width:700px}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--faint);display:flex;align-items:center;
+    gap:10px;margin-bottom:14px}
+  .eyebrow::after{content:"";flex:1;height:1px;background:var(--line)}
+  h1{font-family:var(--serif);font-weight:400;font-size:clamp(38px,7vw,66px);
+    line-height:.98;letter-spacing:-.01em;margin-bottom:16px}
+  .thesis{font-size:clamp(15px,2.2vw,18px);color:var(--muted);max-width:60ch}
+  .thesis b{color:var(--ink);font-weight:500}
+
+  .stage{display:flex;gap:clamp(22px,4vw,44px);align-items:flex-start;flex-wrap:wrap}
+  .col-dims{flex:1 1 340px;min-width:290px}
+  .col-read{flex:1 1 380px;min-width:290px;position:sticky;top:24px}
+
+  .step{font-family:var(--mono);font-size:11px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--faint);margin-bottom:4px}
+  .step-h{font-family:var(--serif);font-size:24px;margin-bottom:6px;line-height:1.1}
+  .step-sub{font-size:13.5px;color:var(--muted);margin-bottom:20px;max-width:44ch}
+
+  .dim{padding:13px 0;border-top:1px solid var(--line)}
+  .dim:first-of-type{border-top:none}
+  .dimname{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--muted);display:block;margin-bottom:8px}
+  .poles{display:flex;gap:8px}
+  .pole{flex:1;font-family:var(--sans);font-size:14px;color:var(--ink);
+    background:var(--paper);border:1px solid var(--line);border-radius:10px;
+    padding:9px 6px;cursor:pointer;transition:all .15s;text-align:center}
+  .pole:hover{border-color:var(--faint)}
+  .pole[aria-pressed="true"]{background:var(--sel-bg);border-color:var(--sel);
+    color:#2C4759;font-weight:500;box-shadow:inset 0 0 0 1px var(--sel)}
+  .pole:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+  .clearbtn{margin-top:18px;font-family:var(--mono);font-size:11px;
+    letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
+    background:none;border:1px solid var(--line);border-radius:8px;
+    padding:7px 14px;cursor:pointer;transition:all .15s}
+  .clearbtn:hover{border-color:var(--faint);color:var(--ink)}
+  .clearbtn:disabled{opacity:.4;cursor:default}
+  .clearbtn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+  .tip{margin-top:20px;font-size:13px;color:var(--muted);
+    background:var(--paper);border:1px solid var(--line);border-left:3px solid var(--sel);
+    border-radius:8px;padding:12px 14px;line-height:1.5}
+  .tip b{color:var(--ink);font-weight:500}
+
+  .readhead{font-family:var(--mono);font-size:11px;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+  .cards{display:flex;flex-direction:column;gap:12px}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:14px;
+    padding:18px 18px 16px;cursor:pointer;transition:border-color .15s,transform .15s}
+  .card:hover{border-color:var(--faint)}
+  .card.contested{background:var(--amber-bg);border-color:#E4D3AE}
+  .card:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+  .recipe{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-bottom:14px}
+  .rp{font-size:13px;padding:3px 11px;border-radius:20px;background:var(--ground);
+    border:1px solid var(--line);color:#3C382F;font-weight:500}
+  .rp.on{background:var(--sel-bg);border-color:var(--sel);color:#2C4759}
+  .plus{color:var(--faint);font-size:13px;font-weight:600}
+  .tier{display:flex;gap:10px;align-items:baseline;margin-bottom:7px}
+  .tl{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--faint);min-width:46px;flex:none;padding-top:2px}
+  .chips{display:flex;flex-wrap:wrap;gap:5px}
+  .chip{font-size:12.5px;padding:2px 9px;border-radius:16px;background:var(--ground);
+    border:1px solid var(--line);color:#3C382F}
+  .card.contested .chip{background:#F0E4C8;border-color:#E4D3AE}
+  .rd{margin-top:13px;padding-top:12px;border-top:1px solid var(--line);
+    font-family:var(--serif);font-size:17px;line-height:1.3;color:var(--ink)}
+  .card.contested .rd{color:var(--amber);border-top-color:#E4D3AE}
+
+  .empty{background:var(--paper);border:1px dashed var(--line);border-radius:14px;
+    padding:22px;font-size:14.5px;color:var(--muted);line-height:1.55}
+  .empty b{color:var(--ink);font-weight:500;font-family:var(--serif);font-size:18px}
+
+  footer{margin-top:clamp(30px,4vw,48px);padding-top:22px;border-top:1px solid var(--line);
+    max-width:720px;font-size:13px;color:var(--muted);line-height:1.6}
+  footer b{color:var(--ink);font-weight:500}
+  .controls{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+  .ctl{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:8px;
+    padding:7px 12px;cursor:pointer;text-decoration:none;transition:all .15s}
+  .ctl:hover{background:var(--ground);border-color:var(--faint)}
+  .ctl:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+  .lic{font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--faint);margin-top:12px}
+
+  @media (max-width:680px){ .col-read{position:static} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">SENSUS · Material Meaning Layer</div>
+    <h1>The Material Feel Map</h1>
+    <p class="thesis"><b>Sensation becomes feeling becomes meaning, through combination.</b> Touch is made of a few independent dimensions. Set how a material sits on each, and watch what the combination comes to mean.</p>
+  </header>
+
+  <div class="stage">
+    <section class="col-dims" aria-label="Sensory dimensions">
+      <div class="step">Step 1</div>
+      <div class="step-h">How does it feel to the hand?</div>
+      <div class="step-sub">Six independent dimensions. A material can be soft and cool, or soft and warm. Set each one freely.</div>
+      <div id="dims"></div>
+      <button id="clear" class="clearbtn" disabled>Clear all</button>
+      <div class="tip">Try <b>soft</b>, then switch between <b>warm</b> and <b>cool</b>. The meaning changes completely.</div>
+    </section>
+
+    <section class="col-read" aria-label="Readings" aria-live="polite">
+      <div class="step">Step 2</div>
+      <div class="step-h">What does it come to mean?</div>
+      <div class="step-sub">Each reading is a hypothesis: a combination of sensations, the feeling it tends to stir, and the meaning it tends to carry.</div>
+      <div class="readhead" id="readhead">Browse all readings, or pick sensations to filter.</div>
+      <div class="cards" id="cards"></div>
+    </section>
+  </div>
+
+  <footer>
+    <b>How this becomes a benchmark.</b> The dimensions are the measurable inputs; the readings are hypotheses about how their combinations map to human response. Some are strong (soft + warm → comforting). Some are contested (rough can read as natural craft or as unfinished). Many combinations have no established reading yet. SENSUS-Bench tests which mappings hold, for whom, and how well models predict them.
+    <div class="controls">
+      <button type="button" id="dlJson" class="ctl">Download JSON</button>
+      <button type="button" id="dlCsv" class="ctl">Download CSV</button>
+      <a class="ctl" href="#contribute">Contribute</a>
+      <a class="ctl" href="#changelog">Changelog</a>
+    </div>
+    <div class="lic">The Material Feel Map is open. Taxonomy and data: CC BY 4.0. Source code: MIT. Use it, cite it, build on it.</div>
+  </footer>
+</div>
+
+<script>
+const DIMENSIONS = [
+  { id:"texture", name:"Texture", poles:["rough","smooth"] },
+  { id:"give",    name:"Give",    poles:["hard","soft"] },
+  { id:"temp",    name:"Temperature", poles:["cool","warm"] },
+  { id:"moisture",name:"Moisture", poles:["dry","moist"] },
+  { id:"grip",    name:"Grip",    poles:["slippery","grippy"] },
+  { id:"weight",  name:"Weight",  poles:["light","substantial"] },
+];
+
+// Each reading is an explicit COMBINATION of independent sensory poles.
+const READINGS = [
+  { recipe:{give:"soft", temp:"warm"},
+    feeling:["comforting","soothing","reassuring"],
+    meaning:["nurturing","homely","gentle"],
+    reading:"Soft and warm together read as care.", contested:false },
+
+  { recipe:{give:"soft", temp:"cool"},
+    feeling:["calm","soothing"],
+    meaning:["refined","composed","clean"],
+    reading:"Soft but cool reads as calm and refined, without the coziness.", contested:false },
+
+  { recipe:{texture:"smooth", temp:"cool", give:"hard"},
+    feeling:["calm","controlled"],
+    meaning:["precise","modern","clinical"],
+    reading:"Smooth, cool and hard read as clean, modern, engineered.", contested:false },
+
+  { recipe:{texture:"rough", moisture:"dry"},
+    feeling:["alerting","bracing"],
+    meaning:["natural","rugged","or unrefined"],
+    reading:"Rough and dry read as natural and rugged, or as unfinished. Context decides.", contested:true },
+
+  { recipe:{grip:"grippy", weight:"substantial"},
+    feeling:["secure","steady","reassuring"],
+    meaning:["durable","dependable","sturdy"],
+    reading:"Grippy and substantial read as durable and dependable.", contested:false },
+
+  { recipe:{texture:"smooth", grip:"slippery"},
+    feeling:["sleek","frictionless"],
+    meaning:["efficient","engineered","or slick, evasive"],
+    reading:"Smooth and slippery read as sleek and efficient, or as slick and evasive.", contested:true },
+
+  { recipe:{grip:"grippy", moisture:"moist"},
+    feeling:["clinging","secure"],
+    meaning:["protective","high-performance","or cheap, synthetic"],
+    reading:"Grippy and moist read as protective, high-performance grip, or as cheap and synthetic.", contested:true },
+
+  { recipe:{texture:"smooth", give:"soft", weight:"light"},
+    feeling:["delicate","light"],
+    meaning:["fine","precious","luxurious"],
+    reading:"Smooth, soft and light read as delicate and precious.", contested:false },
+
+  { recipe:{give:"hard", temp:"cool", weight:"substantial"},
+    feeling:["solid","serious"],
+    meaning:["premium","authoritative","engineered"],
+    reading:"Hard, cool and substantial read as premium and serious.", contested:false },
+];
+
+const selected = {};   // dim -> pole
+const dimsEl = document.getElementById("dims");
+const cardsEl = document.getElementById("cards");
+const readhead = document.getElementById("readhead");
+const clearBtn = document.getElementById("clear");
+const poleName = {}; // pole -> dim, for recipe rendering
+DIMENSIONS.forEach(d=>d.poles.forEach(p=>poleName[p]=d.id));
+
+// ---- build dimension controls ----
+DIMENSIONS.forEach(d=>{
+  const wrap=document.createElement("div"); wrap.className="dim";
+  const name=document.createElement("span"); name.className="dimname"; name.textContent=d.name;
+  const poles=document.createElement("div"); poles.className="poles";
+  d.poles.forEach(p=>{
+    const b=document.createElement("button");
+    b.className="pole"; b.type="button"; b.textContent=p;
+    b.setAttribute("aria-pressed","false");
+    b.dataset.dim=d.id; b.dataset.pole=p;
+    b.addEventListener("click",()=>togglePole(d.id,p));
+    poles.appendChild(b);
+  });
+  wrap.appendChild(name); wrap.appendChild(poles); dimsEl.appendChild(wrap);
+});
+
+function togglePole(dim,pole){
+  if(selected[dim]===pole) delete selected[dim];
+  else selected[dim]=pole;
+  syncPoles(); renderReadings();
+}
+function syncPoles(){
+  dimsEl.querySelectorAll(".pole").forEach(b=>{
+    const on = selected[b.dataset.dim]===b.dataset.pole;
+    b.setAttribute("aria-pressed", on?"true":"false");
+  });
+  clearBtn.disabled = Object.keys(selected).length===0;
+}
+
+// reading matches if every selected pole appears in its recipe
+function matches(r){
+  const keys=Object.keys(selected);
+  return keys.length>0 && keys.every(d=>r.recipe[d]===selected[d]);
+}
+function recipeHTML(r){
+  const parts=Object.entries(r.recipe).map(([dim,pole])=>{
+    const on = selected[dim]===pole;
+    return `<span class="rp${on?" on":""}">${pole}</span>`;
+  });
+  return parts.join('<span class="plus">+</span>');
+}
+function chips(arr){ return arr.map(w=>`<span class="chip">${w}</span>`).join(""); }
+function cardHTML(r,idx){
+  return `<div class="card${r.contested?" contested":""}" tabindex="0" role="button" data-idx="${idx}"
+      aria-label="${Object.values(r.recipe).join(' plus ')}. Means: ${r.meaning.join(', ')}.">
+    <div class="recipe">${recipeHTML(r)}</div>
+    <div class="tier"><span class="tl">feels</span><div class="chips">${chips(r.feeling)}</div></div>
+    <div class="tier"><span class="tl">means</span><div class="chips">${chips(r.meaning)}</div></div>
+    <div class="rd">${r.reading}</div>
+  </div>`;
+}
+function renderReadings(){
+  const nSel=Object.keys(selected).length;
+  let list, head;
+  if(nSel===0){ list=READINGS.map((r,i)=>[r,i]); head="Browse all readings, or pick sensations to filter."; }
+  else {
+    list=READINGS.map((r,i)=>[r,i]).filter(([r])=>matches(r));
+    head = list.length ? `${list.length} reading${list.length>1?"s":""} match your selection`
+                       : "No established reading yet";
+  }
+  readhead.textContent=head;
+  if(nSel>0 && list.length===0){
+    cardsEl.innerHTML=`<div class="empty"><b>Uncharted combination.</b><br>
+      No settled reading maps to this mix yet. That is exactly the kind of gap the benchmark exists to fill. Try loosening one dimension.</div>`;
+    return;
+  }
+  cardsEl.innerHTML=list.map(([r,i])=>cardHTML(r,i)).join("");
+  cardsEl.querySelectorAll(".card").forEach(c=>{
+    const load=()=>loadRecipe(READINGS[+c.dataset.idx]);
+    c.addEventListener("click",load);
+    c.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){e.preventDefault();load();} });
+  });
+}
+function loadRecipe(r){
+  for(const k in selected) delete selected[k];
+  Object.assign(selected, r.recipe);
+  syncPoles(); renderReadings();
+}
+clearBtn.addEventListener("click",()=>{
+  for(const k in selected) delete selected[k];
+  syncPoles(); renderReadings();
+});
+
+// ---- structured-data export ----
+function buildJSON(){
+  return JSON.stringify({
+    name:"Material Feel Map", version:"1.0", license:"CC BY 4.0 (data); MIT (code)",
+    thesis:"sensation becomes feeling becomes meaning, through combination",
+    dimensions:DIMENSIONS.map(d=>({id:d.id,name:d.name,poles:d.poles})),
+    note:"Each reading is a hypothesis mapping a combination of independent sensory poles to feeling and meaning. Dimensions are treated as independent; 'contested' readings carry more than one plausible meaning.",
+    readings:READINGS.map((r,i)=>({id:i+1, recipe:r.recipe, feeling:r.feeling, meaning:r.meaning, contested:r.contested, reading:r.reading}))
+  }, null, 2);
+}
+function csv(v){ v=String(v); return /[",\n]/.test(v) ? '"'+v.replace(/"/g,'""')+'"' : v; }
+function buildCSV(){
+  const rows=[["reading_id","recipe","contested","layer","term"]];
+  READINGS.forEach((r,i)=>{
+    const recipe=Object.values(r.recipe).join(" + ");
+    [["feeling",r.feeling],["meaning",r.meaning]].forEach(([layer,arr])=>{
+      arr.forEach(term=>{
+        const t=String(term).trim();
+        rows.push([i+1, csv(recipe), r.contested?"true":"false", layer, csv(t)]);
+      });
+    });
+  });
+  return rows.map(r=>r.join(",")).join("\n");
+}
+function download(name,text,type){
+  const blob=new Blob([text],{type}); const url=URL.createObjectURL(blob);
+  const a=document.createElement("a"); a.href=url; a.download=name;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+document.getElementById("dlJson").addEventListener("click",()=>download("material-feel-map.json",buildJSON(),"application/json"));
+document.getElementById("dlCsv").addEventListener("click",()=>download("material-feel-map.csv",buildCSV(),"text/csv"));
+
+renderReadings();
+</script>
+</body>
+</html>
